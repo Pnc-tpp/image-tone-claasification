@@ -1,0 +1,136 @@
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing import image
+import numpy as np
+import os
+from google.colab import drive
+drive.mount('/content/drive')
+
+# Remove the problematic line and replace with comment for accessing the directory
+# /content/drive/MyDrive/wayixia/ # This is the path to your directory; no action needed here
+import tensorflow as tf
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+# สร้าง ImageDataGenerator สำหรับ train และ validation
+train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.2)
+
+# โหลดข้อมูลสำหรับ training
+train_generator = train_datagen.flow_from_directory(
+    '/content/drive/MyDrive/wayixia/train/',
+    target_size=(150, 150),  # ขนาดของภาพที่ต้องการ
+    batch_size=32,
+    class_mode='categorical'
+)
+
+# โหลดข้อมูลสำหรับ validation
+validation_generator = train_datagen.flow_from_directory(
+    '/content/drive/MyDrive/wayixia/validation/',
+    target_size=(150, 150),
+    batch_size=32,
+    class_mode='categorical'
+)
+
+# สำหรับ test set
+test_datagen = ImageDataGenerator(rescale=1./255)
+test_generator = test_datagen.flow_from_directory(
+    '/content/drive/MyDrive/wayixia/test/', # Make sure this path is correct!
+    target_size=(150, 150),
+    batch_size=32,
+    class_mode='categorical'
+)
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+
+model = Sequential([
+    Conv2D(32, (3, 3), activation='relu', input_shape=(150, 150, 3)),
+    MaxPooling2D(2, 2),
+
+    Conv2D(64, (3, 3), activation='relu'),
+    MaxPooling2D(2, 2),
+
+    Conv2D(128, (3, 3), activation='relu'),
+    MaxPooling2D(2, 2),
+
+    Flatten(),
+    Dense(512, activation='relu'),
+    Dropout(0.5),
+    Dense(5, activation='softmax') # ปรับเป็น 'softmax' สำหรับหลายคลาส
+])
+
+# Corrected the loss function name from 'catagorical_crossentropy' to 'categorical_crossentropy'
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+history = model.fit(
+    train_generator,
+    steps_per_epoch=train_generator.samples // train_generator.batch_size,
+    validation_data=validation_generator,
+    validation_steps=validation_generator.samples // validation_generator.batch_size,
+    epochs=17
+)
+loss, accuracy = model.evaluate(validation_generator)
+print(f"Validation Accuracy: {accuracy*100:.2f}%")
+import numpy as np
+from tensorflow.keras.preprocessing import image
+
+def filter_images(model, images_path, target_class):
+    filtered_images = []
+
+    for img_path in images_path:
+        img = image.load_img(img_path, target_size=(150, 150))
+        img_array = image.img_to_array(img)
+        img_array = np.expand_dims(img_array, axis=0) / 255.0
+
+        # ทำนายคลาสของภาพ
+        prediction = model.predict(img_array)
+        predicted_class = np.argmax(prediction)  # คลาสที่มีความน่าจะเป็นสูงสุด
+
+        # ถ้าคลาสที่ทำนายตรงกับ target_class ให้เพิ่มรูปภาพลงใน filtered_images
+        if predicted_class == target_class:
+            filtered_images.append(img_path)
+
+    return filtered_images
+from tensorflow.keras.preprocessing import image
+import numpy as np
+import os
+
+# ฟังก์ชัน classify_image สำหรับหลายคลาส
+def classify_image(img_path, model):
+    img = image.load_img(img_path, target_size=(150, 150))  # โหลดและปรับขนาดภาพ
+    img_array = image.img_to_array(img) / 255.0  # ปรับขนาดพิกเซลให้อยู่ระหว่าง 0-1
+    img_array = np.expand_dims(img_array, axis=0)  # ขยายมิติของภาพสำหรับการทำนาย
+    prediction = model.predict(img_array)  # ทำนายคลาสของภาพ
+    return np.argmax(prediction)
+
+# กำหนด label ของคลาสต่าง ๆ
+class_labels = {0: "colorful", 1: "cool tone", 2: "earth tone", 3: "warm tone", 4: "night mood"}
+
+# รับ input จากผู้ใช้
+dataset_path = input("กรุณาใส่พาธโฟลเดอร์ที่เก็บรูปภาพ: ")
+for label, tone in class_labels.items():
+    print(f"{label}: {tone}")
+search_class = int(input("กรุณาใส่หมายเลขโทนสีที่ต้องการค้นหา (0-4): "))
+
+# ตรวจสอบว่า search_class ถูกต้องหรือไม่
+if search_class not in class_labels:
+    print("หมายเลขโทนสีที่เลือกไม่ถูกต้อง")
+else:
+    selected_images = []
+
+    # วนซ้ำเพื่อประมวลผลแต่ละภาพ
+    for img_file in os.listdir(dataset_path):
+        img_path = os.path.join(dataset_path, img_file)
+
+        # ตรวจสอบว่าเป็นไฟล์ภาพหรือไม่
+        if os.path.isfile(img_path):
+            # ทำนายคลาสของภาพโดยใช้ฟังก์ชัน classify_image
+            predicted_class = classify_image(img_path, model)
+
+            # หากคลาสตรงกับ search_class ให้เพิ่มภาพใน selected_images
+            if predicted_class == search_class:
+                selected_images.append(img_path)
+
+    # แสดงภาพที่ตรงกับประเภทที่ต้องการ
+    print(f"ภาพที่ตรงกับประเภท '{class_labels[search_class]}':", selected_images)
