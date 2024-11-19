@@ -7,7 +7,7 @@ from tensorflow.keras.models import load_model
 import gdown
 from tensorflow.keras.models import load_model
 import os
-os.makedirs('/content/image-tone-claasification/', exist_ok=True)
+os.makedirs('image-tone-claasification', exist_ok=True)
 # Correct URL for the shared file
 url = 'https://drive.google.com/uc?id=16pdmFNxpeSWFfstRNruznuap6n6gbPpZ'  # Updated URL format
 output = '/content/image-tone-claasification/my_model.h5'  # Save to a specific directory
