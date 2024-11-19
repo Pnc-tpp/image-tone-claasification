@@ -6,7 +6,7 @@ import os
 from tensorflow.keras.models import load_model
 
 # Load the saved model
-model = load_model('/content/image-tone-claasification/my model.h5')
+model = load_model('content/image-tone-claasification/my model.h5')
 
 # Function to classify an image
 def classify_image(img_path, model):
