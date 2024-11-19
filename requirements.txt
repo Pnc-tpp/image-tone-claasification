@@ -2,3 +2,4 @@ streamlit
 tensorflow 
 numpy
 h5py==3.8.0
+keras
