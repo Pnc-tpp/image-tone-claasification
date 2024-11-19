@@ -10,3 +10,4 @@ tensorflow-probability
 numpy
 h5py
 keras
+gdown
