@@ -27,7 +27,7 @@ class_labels = {0: "colorful", 1: "cool tone", 2: "earth tone", 3: "warm tone", 
 
 # Streamlit app
 st.title("Image Classification App")
-st.subheader(A model that helps choosing image with harmonized tones.)
+st.subheader("A model that helps choosing image with harmonized tones.")
 st.markdown("Upload an image to classify")
 
 
