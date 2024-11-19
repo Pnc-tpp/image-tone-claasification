@@ -1,13 +1,14 @@
 !pip install streamlit
 !pip install tensorflow
 !pip install keras
+mkdir -p /mount/admin/install_path
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 import numpy as np
 import os
 from tensorflow.keras.models import load_model
-mkdir -p /mount/admin/install_path
+
 # Load the saved model
 model = load_model('/content/image-tone-claasification/my model.h5')
 
@@ -50,3 +51,5 @@ if uploaded_file is not None:
 
         #Remove the temporary file
         os.remove(temp_file_path)
+else:
+    st.warning("Please upload an image to classify.")
