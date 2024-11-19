@@ -1,4 +1,0 @@
-streamlit
-tensorflow
-h5py
-numpy
