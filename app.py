@@ -4,9 +4,19 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 import os
 from tensorflow.keras.models import load_model
+import gdown
+from tensorflow.keras.models import load_model
+!mkdir -p /content/image-tone-claasification/ #create a new directory
 
-# Load the saved model
-model = load_model('/content/drive/MyDrive/my_model.h5')
+# Correct URL for the shared file
+url = 'https://drive.google.com/uc?id=16pdmFNxpeSWFfstRNruznuap6n6gbPpZ'  # Updated URL format
+output = '/content/image-tone-claasification/my_model.h5'  # Save to a specific directory
+
+# Download the file using gdown
+gdown.download(url, output, quiet=False)
+
+# Now you can load the model
+model = load_model(output)
 
 # Function to classify an image
 def classify_image(img_path, model):
