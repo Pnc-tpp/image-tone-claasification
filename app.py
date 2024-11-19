@@ -4,7 +4,7 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 import os
 from tensorflow.keras.models import load_model
-
+mkdir -p /mount/admin/install_path
 # Load the saved model
 model = load_model('/content/image-tone-claasification/my model.h5')
 
