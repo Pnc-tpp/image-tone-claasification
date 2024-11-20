@@ -25,9 +25,9 @@ def classify_image(img_path, model):
 
 class_labels = {0: "colorful", 1: "cool tone", 2: "earth tone", 3: "warm tone", 4: "night mood"}
 
-st.title("Image Classification App")
+st.title("Images Tone Classification App")
 st.subheader("A model that helps choosing image with harmonized tones.")
-st.markdown("Upload an image to classify")
+st.markdown("Please upload images to classify")
 
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
