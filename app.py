@@ -7,15 +7,12 @@ from tensorflow.keras.models import load_model
 import gdown
 from tensorflow.keras.models import load_model
 import os
-os.makedirs('image-tone-claasification', exist_ok=True)
-# Correct URL for the shared file
-url = 'https://drive.google.com/uc?id=16pdmFNxpeSWFfstRNruznuap6n6gbPpZ'  # Updated URL format
-output = '/content/image-tone-claasification/my_model.h5'  # Save to a specific directory
+st.set_option('deprecation.showfileUploaderEncoding', False)
 
-# Download the file using gdown
-gdown.download(url, output, quiet=False)
-
-# Now you can load the model
+@st.cache(allow_output_mutation=True)
+def load_model():
+	model = tf.keras.models.load_model('./flower_model_trained.hdf5')
+	return model
 model = load_model(output)
 
 # Function to classify an image
