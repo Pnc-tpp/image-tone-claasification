@@ -21,7 +21,7 @@ def classify_image(img_path, model):
         return np.argmax(prediction)
     except Exception as e:
         st.error(f"Error classifying image: {e}")
-        return None
+        return predicted_class
 
 class_labels = {0: "colorful", 1: "cool tone", 2: "earth tone", 3: "warm tone", 4: "night mood"}
 
