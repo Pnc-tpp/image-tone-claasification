@@ -50,10 +50,10 @@ img_array /= 255.0  # ปรับค่าพิกเซลเป็น 0-1
 predictions = model.predict(img_array)
 predicted_class = np.argmax(predictions, axis=1)[0]  # ดึงคลาสที่มีค่าความน่าจะเป็นสูงสุด
 print("Predicted class:", predicted_class)
-    if predicted_class is not None:
+if predicted_class is not None:
         st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
         st.write(f"Predicted class: {class_labels[predicted_class]}")
-    else:
+else:
         st.error("Unable to classify the image. Please try a different image.")
         st.write(f"Description: This images are classified as a '{class_labels[predicted_class]}' tone.")
 
