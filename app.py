@@ -59,5 +59,6 @@ else:
 
         st.success("Image classification completed successfully!")
         os.remove(temp_file_path)
+	
 else:
 	st.warning("Please upload an image to classify.")
