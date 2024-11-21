@@ -10,7 +10,7 @@ import joblib
 
 url = 'https://drive.google.com/file/d/1nhc-Yir6d4YozU8oZdKYs5zqJ4mrOVZr/view?usp=drive_link'
 output = 'model/model_filename'
-gdown.download(url, output, quiet=False)
+gdown.download(url, output)
 
 model = joblib.load(output)
 def classify_image(img_path, model):
