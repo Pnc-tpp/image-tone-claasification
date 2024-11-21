@@ -35,7 +35,7 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png
 if uploaded_file is not None:
 	temp_file_path = "temp_image.jpg"
 	with open(temp_file_path, "wb") as f:
-	f.write(uploaded_file.getbuffer())
+		f.write(uploaded_file.getbuffer())
 	from tensorflow.keras.preprocessing import image
 	import numpy as np
 	img = image.load_img(temp_file_path, target_size=(150, 150))  # กำหนดขนาดภาพให้ตรงกับโมเดล
