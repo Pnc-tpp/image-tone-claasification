@@ -6,13 +6,26 @@ import os
 import gdown
 from tensorflow.keras.models import load_model
 import os
-import joblib
+# กำหนด URL ของไฟล์ใน Google Drive
+file_id = '1nhc-Yir6d4YozU8oZdKYs5zqJ4mrOVZr/view?usp'  # เปลี่ยนเป็น ID ของไฟล์จริง
+url = f'https://drive.google.com/file/d/1nhc-Yir6d4YozU8oZdKYs5zqJ4mrOVZr/view?usp=drive_link'
 
-url = 'https://drive.google.com/file/d/1nhc-Yir6d4YozU8oZdKYs5zqJ4mrOVZr/view?usp=drive_link'
-output = 'model'
+# กำหนด path ที่จะบันทึกไฟล์
+output = 'models/model.h5'  # กำหนดให้ตรงกับชื่อไฟล์ .h5 ที่คุณดาวน์โหลด
+
+# ดาวน์โหลดไฟล์จาก Google Drive
 gdown.download(url, output, quiet=False)
 
-model = joblib.load(output)
+# ตรวจสอบว่าไฟล์มีอยู่ใน path ที่กำหนด
+if os.path.exists(output):
+    print(f"ไฟล์ {output} ถูกดาวน์โหลดสำเร็จ")
+    
+    # โหลดโมเดลจากไฟล์ .h5
+    model = tf.keras.models.load_model(output)
+    print("โมเดลถูกโหลดสำเร็จ!")
+else:
+    print(f"ไม่พบไฟล์ {output}")
+
 def classify_image(img_path, model):
   
     try:
