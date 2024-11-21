@@ -3,7 +3,6 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 import numpy as np
 import os
-from tensorflow.keras.models import load_model
 import gdown
 from tensorflow.keras.models import load_model
 import os
@@ -38,7 +37,7 @@ if uploaded_file is not None:
 		f.write(uploaded_file.getbuffer())
 	from tensorflow.keras.preprocessing import image
 	import numpy as np
-	model = load_model('/content/drive/MyDrive/my_model.h5')
+	model = tf.keras.models.load_model('/content/drive/MyDrive/my_model.h5')
 	img = image.load_img(temp_file_path, target_size=(150, 150))  # กำหนดขนาดภาพให้ตรงกับโมเดล
 	img_array =image.img_to_array(img)
 	img_array = np.expand_dims(img_array, axis=0)  # เพิ่ม batch dimension
