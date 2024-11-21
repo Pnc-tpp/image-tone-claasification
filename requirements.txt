@@ -11,3 +11,4 @@ numpy
 h5py
 keras
 gdown
+joblib
