@@ -14,7 +14,7 @@ url = f'https://drive.google.com/file/d/1nhc-Yir6d4YozU8oZdKYs5zqJ4mrOVZr/view?u
 output = 'models/model.h5'  # กำหนดให้ตรงกับชื่อไฟล์ .h5 ที่คุณดาวน์โหลด
 
 # ดาวน์โหลดไฟล์จาก Google Drive
-gdown.download(url, output, quiet=False)
+gdown.download(url)
 
 # ตรวจสอบว่าไฟล์มีอยู่ใน path ที่กำหนด
 if os.path.exists(output):
