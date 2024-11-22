@@ -6,6 +6,7 @@ import os
 import gdown
 from tensorflow.keras.models import load_model
 import os
+import keras
 # กำหนด URL ของไฟล์ใน Google Drive
 file_id = '1nhc-Yir6d4YozU8oZdKYs5zqJ4mrOVZr/view?usp'  # เปลี่ยนเป็น ID ของไฟล์จริง
 url = f'https://drive.google.com/file/d/1nhc-Yir6d4YozU8oZdKYs5zqJ4mrOVZr/view?usp=drive_link'
@@ -21,7 +22,7 @@ if os.path.exists(output):
     print(f"ไฟล์ {output} ถูกดาวน์โหลดสำเร็จ")
     
     # โหลดโมเดลจากไฟล์ .h5
-    model = tf.keras.saving.load_model("hf://kc1976/tone-image-classification")
+    model = keras.saving.load_model("hf://kc1976/tone-image-classification")
     print("โมเดลถูกโหลดสำเร็จ!")
 else:
     print(f"ไม่พบไฟล์ {output}")
