@@ -12,4 +12,5 @@ h5py
 keras
 gdown
 joblib
-keras huggingface_hub
+keras 
+huggingface_hub
