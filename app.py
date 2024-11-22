@@ -21,7 +21,7 @@ if os.path.exists(output):
     print(f"ไฟล์ {output} ถูกดาวน์โหลดสำเร็จ")
     
     # โหลดโมเดลจากไฟล์ .h5
-    model = tf.keras.models.load_model(output)
+    model = tf.keras.saving.load_model("hf://kc1976/tone-image-classification")
     print("โมเดลถูกโหลดสำเร็จ!")
 else:
     print(f"ไม่พบไฟล์ {output}")
